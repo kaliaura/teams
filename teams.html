@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KaliAura '25 | Team Overview</title>
+    
+    <!-- Fonts: Poppins for all text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Icon for the Trophy -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* --- VARIABLES & THEME --- */
+        :root {
+            --bg: #030303;
+            --text: #ffffff;
+            --text-muted: #ffffff80;
+            
+            --aura-1: #7c3aed; /* Violet */
+            --aura-2: #db2777; /* Magenta */
+            --aura-3: #06b6d4; /* Cyan */
+            
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-hover: rgba(255, 255, 255, 0.08);
+            
+            --team-color-calindra: #06b6d4; /* Cyan */
+            --team-color-ignera: #db2777; /* Magenta */
+            --team-color-fyrona: #7c3aed; /* Violet */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, .logo { font-family: 'Poppins', sans-serif; }
+
+        /* --- BACKGROUND ORB --- */
+        .aura-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.15), transparent 50%);
+            opacity: 0.6;
+            filter: blur(60px);
+            pointer-events: none;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--aura-1); top: -10%; left: -10%; }
+        .orb-2 { width: 300px; height: 300px; background: var(--aura-2); bottom: 10%; right: -5%; }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: sticky; 
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1000px;
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 12px 30px;
+            border-radius: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            margin-bottom: 50px;
+        }
+
+        .logo { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.5px; }
+        .nav-menu { display: flex; gap: 5px; }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 8px 20px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link:hover:not(.active) { color: #fff; }
+
+        /* --- MAIN CONTENT LAYOUT --- */
+        main {
+            padding-top: 50px; 
+            padding-bottom: 80px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .section-title span { color: var(--aura-2); }
+        
+        /* --- TEAM GRID --- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .team-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            
+            /* Team Color Border Top */
+            border-top: 5px solid transparent;
+        }
+
+        .team-card.calindra { border-top-color: var(--team-color-calindra); }
+        .team-card.ignera { border-top-color: var(--team-color-ignera); }
+        .team-card.fyrona { border-top-color: var(--team-color-fyrona); }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .team-name {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .team-slogan {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        
+        .team-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .team-card.calindra .team-icon { color: var(--team-color-calindra); }
+        .team-card.ignera .team-icon { color: var(--team-color-ignera); }
+        .team-card.fyrona .team-icon { color: var(--team-color-fyrona); }
+
+        .points-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .points-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--aura-1);
+        }
+        
+        .points-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 80px 20px 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. ANIMATED BACKGROUND -->
+    <div class="aura-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <!-- 2. NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">KALI AURA</div>
+        <div class="nav-menu">
+            <a href="https://kaliaura.github.io/" class="nav-link">Home</a>
+            <a href="https://kaliaura.github.io" class="nav-link">About</a>
+            <a href="https://kaliaura.github.io/results" class="nav-link">Results</a>
+            <a href="https://kaliaura.github.io/teams" class="nav-link active">Teams</a>
+            <a href="https://kaliaura.github.io/gallery" class="nav-link">Gallery</a>
+        </div>
+    </nav>
+
+    <!-- 3. MAIN CONTENT -->
+    <main>
+        
+        <h2 class="section-title">Meet The <span>Teams</span></h2>
+        
+        <section class="team-grid">
+            
+            <!-- Team Calindra Card -->
+            <a href="https://kaliaura.github.io/calindra" class="team-card-link">
+                <div class="team-card calindra">
+                    <i class="fas fa-meteor team-icon"></i>
+                    <h3 class="team-name">Calindra</h3>
+                    <p class="team-slogan">The Meteorites of Magnitude.</p>
+                    <div class="points-box">
+                        <span class="points-number">800</span>
+                        <span class="points-label">Current Points</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Team Ignera Card -->
+            <a href="https://kaliaura.github.io/ignera" class="team-card-link">
+                <div class="team-card ignera">
+                    <i class="fas fa-dragon team-icon"></i>
+                    <h3 class="team-name">Ignera</h3>
+                    <p class="team-slogan">Igniting the Flames of Victory.</p>
+                    <div class="points-box">
+                        <span class="points-number">650</span>
+                        <span class="points-label">Current Points</span>
+                    </div>
+                </div>
+            </a>
+            
+            <!-- Team Fyrona Card -->
+            <a href="https://kaliaura.github.io/fyrona" class="team-card-link">
+                <div class="team-card fyrona">
+                    <i class="fas fa-bolt team-icon"></i>
+                    <h3 class="team-name">Fyrona</h3>
+                    <p class="team-slogan">Lightning Fast, Victory Lasts.</p>
+                    <div class="points-box">
+                        <span class="points-number"></span>
+                        <span class="points-label">IN PROGRESS</span>
+                    </div>
+                </div>
+            </a>
+            
+           
+            
+            
+        </section>
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 KaliAura Fest Committee. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
